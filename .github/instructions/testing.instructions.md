@@ -1,5 +1,5 @@
 ---
-applyTo: tests/**
+applyTo: tests/**, playwright.config.ts
 ---
 
 # Testing Instructions
@@ -158,3 +158,9 @@ await expect(items).toHaveCount(3);
 
 ## CI Integration
 Tests run automatically on push to `main` and pull requests. Reports uploaded as artifacts for 30 days.
+
+## Agent Invocation
+- **Frontend**: If you need to update frontend components or logic, invoke the **Frontend Agent** using `runSubagent`.
+  - Prompt: "Act as a Frontend Agent. [Task description]..."
+- **Backend**: If you need to update the backend API or logic, invoke the **Backend Agent** using `runSubagent`.
+  - Prompt: "Act as a Backend Agent. [Task description]..."

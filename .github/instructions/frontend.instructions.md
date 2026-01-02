@@ -1,6 +1,5 @@
-```instructions
 ---
-applyTo: src/**, astro.config.mjs, tailwind.config.mjs
+applyTo: src/**, astro.config.mjs, tailwind.config.mjs, postcss.config.cjs, package.json
 ---
 
 # Frontend Instructions
@@ -81,4 +80,9 @@ npm run preview    # Preview build locally
 - Check `response.ok`.
 - Parse error JSON: `{ error: string }`.
 - Display user-friendly toast or alert.
-```
+
+## Agent Invocation
+- **Testing**: If you need to update tests (E2E, contracts), invoke the **Testing Agent** using `runSubagent`.
+  - Prompt: "Act as a Testing Agent. [Task description]..."
+- **Backend**: If you need to update the backend (Workers, Durable Objects), invoke the **Backend Agent** using `runSubagent`.
+  - Prompt: "Act as a Backend Agent. [Task description]..."
