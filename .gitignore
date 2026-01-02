@@ -22,3 +22,7 @@ Thumbs.db
 # IDEs
 .vscode/
 .idea/
+
+# playwright test artifacts
+test-results/
+playwright-report/
