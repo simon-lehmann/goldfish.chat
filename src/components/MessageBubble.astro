@@ -1,0 +1,21 @@
+---
+interface Props {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+const { role, content } = Astro.props;
+const isUser = role === 'user';
+---
+
+<div class={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+  <div 
+    class={`max-w-[80%] rounded-2xl px-4 py-2 prose dark:prose-invert ${
+      isUser 
+        ? 'chat-bubble-user' 
+        : 'chat-bubble-assistant'
+    }`}
+  >
+    {content}
+  </div>
+</div>

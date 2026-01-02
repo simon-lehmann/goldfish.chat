@@ -1,0 +1,20 @@
+{
+  "name": "goldfish-chat",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.1.18",
+    "@workos-inc/node": "^7.79.2",
+    "astro": "^5.16.6",
+    "nanostores": "^1.1.0",
+    "tailwindcss": "^4.1.18"
+  }
+}

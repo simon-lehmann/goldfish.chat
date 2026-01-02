@@ -1,0 +1,71 @@
+---
+// ChatSidebar.astro
+import PrivacyBadge from './PrivacyBadge.astro';
+---
+<aside class="w-64 border-r border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 flex flex-col h-full">
+  <div class="p-4 border-b border-gray-200 dark:border-gray-800">
+    <button
+      id="new-chat-btn"
+      class="w-full bg-blue-500 text-white rounded-lg py-2 hover:bg-blue-600 transition cursor-pointer"
+      data-testid="new-chat-button"
+    >
+      + New Chat
+    </button>
+  </div>
+  
+  <nav id="chat-list" class="flex-1 overflow-y-auto p-2 space-y-1">
+    <!-- Chat items rendered dynamically -->
+  </nav>
+  
+  <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+    <PrivacyBadge />
+  </div>
+</aside>
+
+<script>
+  import { $conversations, $activeChat } from '../scripts/store';
+  
+  const list = document.getElementById('chat-list');
+  const newChatBtn = document.getElementById('new-chat-btn');
+  
+  function renderList() {
+      if (!list) return;
+      const conversations = $conversations.get();
+      const activeId = $activeChat.get();
+      
+      const chats = Object.values(conversations);
+      
+      if (chats.length === 0) {
+          list.innerHTML = '<div class="text-xs text-gray-400 text-center p-4">No recent chats</div>';
+          return;
+      }
+
+      list.innerHTML = chats.map(chat => `
+        <button
+          class="w-full text-left px-3 py-2 rounded-lg text-sm truncate transition-colors ${
+            chat.id === activeId 
+              ? 'bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white font-medium' 
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+          }"
+          data-id="${chat.id}"
+        >
+          ${chat.title || 'New Chat'}
+        </button>
+      `).join('');
+      
+      // Add click listeners
+      list.querySelectorAll('button').forEach(btn => {
+          btn.addEventListener('click', () => {
+              const id = btn.getAttribute('data-id');
+              if (id) $activeChat.set(id);
+          });
+      });
+  }
+  
+  $conversations.subscribe(renderList);
+  $activeChat.subscribe(renderList);
+  
+  newChatBtn?.addEventListener('click', () => {
+      $activeChat.set(null);
+  });
+</script>

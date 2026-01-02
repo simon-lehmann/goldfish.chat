@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-goldfish-50: #fff7ed;
+  --color-goldfish-500: #f97316;
+  --color-goldfish-600: #ea580c;
+}
+
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+  }
+}
+
+@layer components {
+  .chat-bubble-user {
+    @apply bg-blue-500 text-white rounded-2xl rounded-br-md px-4 py-2;
+  }
+  
+  .chat-bubble-assistant {
+    @apply bg-gray-200 dark:bg-gray-700 rounded-2xl rounded-bl-md px-4 py-2;
+  }
+}

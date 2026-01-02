@@ -1,0 +1,38 @@
+---
+// ModelSelector.astro
+const models = [
+  { id: 'gpt-4o', name: 'GPT-4o', provider: 'OpenAI' },
+  { id: 'claude-3-5-sonnet', name: 'Claude 3.5 Sonnet', provider: 'Anthropic' },
+  { id: 'llama-3-8b', name: 'Llama 3 8B', provider: 'Workers AI' },
+];
+---
+
+<select
+  id="model-selector"
+  class="rounded-lg border px-3 py-2 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+  aria-label="Model"
+  data-testid="model-selector"
+>
+  {models.map((model) => (
+    <option value={model.id}>
+      {model.name}
+    </option>
+  ))}
+</select>
+
+<script>
+  import { $selectedModel } from '../scripts/store';
+  
+  const selector = document.getElementById('model-selector') as HTMLSelectElement;
+  
+  if (selector) {
+      // Set initial value
+      selector.value = $selectedModel.get();
+      
+      // Update store on change
+      selector.addEventListener('change', () => {
+        $selectedModel.set(selector.value);
+        localStorage.setItem('selectedModel', selector.value);
+      });
+  }
+</script>

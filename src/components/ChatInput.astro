@@ -1,0 +1,45 @@
+---
+// ChatInput.astro
+---
+<form id="chat-form" class="border-t p-4 flex gap-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+  <textarea
+    id="message-input"
+    placeholder="Type a message..."
+    class="flex-1 resize-none rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+    rows="1"
+    data-testid="message-input"
+  ></textarea>
+  <button
+    type="submit"
+    class="bg-blue-500 text-white rounded-xl px-6 py-3 hover:bg-blue-600 transition cursor-pointer"
+    data-testid="send-button"
+  >
+    Send
+  </button>
+</form>
+
+<script>
+  import { sendMessage } from '../scripts/chat';
+  import { $selectedModel } from '../scripts/store';
+  
+  const form = document.getElementById('chat-form') as HTMLFormElement;
+  const input = document.getElementById('message-input') as HTMLTextAreaElement;
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!input) return;
+    const message = input.value.trim();
+    if (!message) return;
+    
+    input.value = '';
+    await sendMessage(message, $selectedModel.get());
+  });
+  
+  // Enter to send (Shift+Enter for new line)
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      form?.requestSubmit();
+    }
+  });
+</script>

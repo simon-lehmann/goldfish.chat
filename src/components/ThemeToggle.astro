@@ -1,0 +1,37 @@
+---
+// ThemeToggle.astro
+---
+<button
+  id="theme-toggle"
+  class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+  aria-label="Toggle theme"
+  data-testid="theme-toggle"
+>
+  <span id="theme-icon">🌙</span>
+</button>
+
+<script>
+  import { $theme } from '../scripts/store';
+  
+  const toggle = document.getElementById('theme-toggle');
+  const icon = document.getElementById('theme-icon');
+  
+  function updateTheme(theme: 'light' | 'dark') {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    localStorage.setItem('theme', theme);
+  }
+  
+  // Initialize from localStorage or system preference
+  const saved = localStorage.getItem('theme') as 'light' | 'dark' | null;
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initial = saved || (systemDark ? 'dark' : 'light');
+  $theme.set(initial);
+  updateTheme(initial);
+  
+  toggle?.addEventListener('click', () => {
+    const newTheme = $theme.get() === 'dark' ? 'light' : 'dark';
+    $theme.set(newTheme);
+    updateTheme(newTheme);
+  });
+</script>

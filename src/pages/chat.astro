@@ -1,0 +1,34 @@
+---
+// src/pages/chat.astro
+import Layout from '../layouts/MainLayout.astro';
+import ChatWindow from '../components/ChatWindow.astro';
+import ChatSidebar from '../components/ChatSidebar.astro';
+import UserButton from '../components/UserButton.astro';
+import ChatInput from '../components/ChatInput.astro';
+import ModelSelector from '../components/ModelSelector.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+export const prerender = false;
+
+const { user } = Astro.locals;
+---
+
+<Layout title="Chat - goldfish.chat">
+  <div class="flex h-screen">
+    <ChatSidebar />
+    <main class="flex-1 flex flex-col">
+      <header class="border-b border-gray-200 dark:border-gray-800 p-4 flex justify-between items-center bg-white dark:bg-gray-900">
+        <div class="flex items-center gap-4">
+            <h1 class="font-bold text-xl">goldfish.chat 🐠</h1>
+            <ModelSelector />
+        </div>
+        <div class="flex items-center gap-4">
+            <ThemeToggle />
+            {user && <UserButton user={user} />}
+        </div>
+      </header>
+      <ChatWindow />
+      <ChatInput />
+    </main>
+  </div>
+</Layout>
