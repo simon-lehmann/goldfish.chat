@@ -33,6 +33,23 @@ The project uses a hybrid testing approach:
 | `tests/fixtures/` | Reusable test utilities and fixtures |
 | `worker/wrangler.toml` | Backend configuration (used by `wrangler dev`) |
 
+### Commands
+```bash
+npm test              # All tests
+npm run test:e2e      # E2E only
+npm run test:contracts # Contracts only
+npm run test:headed   # With browser visible
+npm run test:debug    # Debug mode
+```
+
+### Coverage Areas
+1. **Chat** - Send/receive messages, streaming, input handling
+2. **Sidebar** - Conversation list, switching, new chat
+3. **Privacy** - 3-chat limit, delete, clear all
+4. **Models** - Selection, persistence
+5. **Theme** - Toggle, persistence, system preference
+6. **Errors** - Network failures, invalid responses
+
 ---
 
 ## Agent Capabilities
